@@ -1,0 +1,25 @@
+body {
+    background-color: #ffffff;
+}
+img{
+    height: 50%;
+    width: 50%;
+}
+.payment-form {
+    max-width: 400px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.btn:not(:disabled):not(.disabled) {
+cursor:pointer;
+background-color: #9f2b2b;
+}
+@media(max-width: 600px){
+    img{
+        height: 100%;
+        width: 100%;
+    }
+}

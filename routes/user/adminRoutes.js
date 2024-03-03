@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const router = express.Router();
 
@@ -153,7 +154,7 @@ router.post(
   async (req, res) => {
 
     try {
-      const { name, description, price, ingredients } = req.body;
+      const { name, description, price, ingredients,category } = req.body;
     const fileBuffer = req.file.buffer.toString("base64");
     const fileUpload = await cloudinaryConfig.uploader.upload(
       `data:image/png;base64,${fileBuffer}`,
@@ -171,6 +172,7 @@ router.post(
         price: price,
         ingredients: ingredients,
         image: fileUpload.secure_url,
+        category:category
       })
       .then(() => {
         res.redirect("/admin/dashboard");
@@ -186,6 +188,112 @@ router.post(
     
   }
 );
+
+
+router.get("/dashboard/product/update/:product", async (req, res) => {
+  const {product}=req.params;
+  if (req.cookies.admin) {
+    const tokenId = jwt.verify(req.cookies.admin, "sdfkjendfk");
+    const findAdmin = await adminLogin.findByPk(tokenId);
+
+    if (findAdmin) {
+      const findProduct=await productModel.findByPk(product);
+      console.log(findProduct);
+      res.render("admin/updateproduct",{product:findProduct?.dataValues});
+    } else {
+      res.clearCookie("admin");
+      res.redirect("/admin/login");
+    }
+  } else {
+    res.redirect("/admin/login");
+  }
+});
+
+
+router.post(
+  "/dashboard/product/update/:product",
+  upload.single("file"),
+  async (req, res) => {
+    const {
+      name,
+      description,
+     category,
+     price,
+     ingredients
+
+    } = req.body;
+    const {product}=req.params
+    if (req.cookies.admin) {
+      const verify = jwt.verify(
+        req.cookies.admin,
+        "sdfkjendfk"
+      );
+      const checkId = await adminLogin.findByPk(verify);
+
+      if (!checkId) {
+        res.clearCookie("admin");
+        res.redirect("/admin/login");
+      } else {
+          const findProduct = await productModel.findByPk(product);
+          if (!findProduct) {
+            res.redirect(`/admin/dashboard`);
+          } else {
+            //Chcek if the image is not update
+            if (!req.file) {
+              findProduct
+                .update({
+                  name: name,
+                  description: description,
+                  category:category,
+                  price:price,
+                  ingredients:ingredients
+                })
+                .then(() => {
+                  res.redirect(`/admin/dashboard`);
+                })
+                .catch((err) => {
+                  res.json({ err: err });
+                });
+            } else {
+              const fileBuffer = req.file.buffer.toString("base64");
+              const fileUpload = await cloudinaryConfig.uploader.upload(
+                `data:image/png;base64,${fileBuffer}`,
+                {
+                  folder: "/events",
+                  public_id: Date.now() + "-" + req.file.originalname,
+                  encoding: "base64",
+                }
+              );
+
+              
+
+                findProduct
+                  .update({
+                    name: name,
+                    description: description,
+                    category:category,
+                    price:price,
+                    ingredients:ingredients,
+                    image: fileUpload.secure_url,
+                  })
+                  .then(() => {
+                    res.redirect(`/admin/dashboard`);
+                  })
+                  .catch((err) => {
+                    res.json({ err: err });
+                  });
+              
+            }
+          }
+        }
+      }
+    } 
+);
+
+
+
+
+
 
 router.get("/dashboard/product/delete/:id", async (req, res) => {
   const { id } = req.params;
@@ -207,7 +315,9 @@ router.get("/feedback", async (req, res) => {
     const findAdmin = await adminLogin.findByPk(tokenId);
 
     if (findAdmin) {
-      const feedback = await feedbackModel.findAll({});
+      const feedback = await feedbackModel.findAll({
+        order:[["createdAt","DESC"]]
+      });
       res.render("admin/feedback", { feedback: feedback });
     } else {
       res.clearCookie("admin");
@@ -241,7 +351,9 @@ router.get("/orders", async (req, res) => {
     const findAdmin = await adminLogin.findByPk(tokenId);
 
     if (findAdmin) {
-      const orders = await orderModel.findAll({});
+      const orders = await orderModel.findAll({
+        order:[["createdAt","DESC"]]
+      });
       res.render("admin/order", { orders: orders });
     } else {
       res.clearCookie("admin");

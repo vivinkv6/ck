@@ -1,92 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamburger Menu</title>
+    <link rel="stylesheet" href="/stylesheets/user/nav.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/stylesheets/user/searchbar.css" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <link rel="stylesheet" href="/stylesheets/user/footer.css">
+    <link rel="stylesheet" href="/stylesheets/user/category.css">
+    <script src="js/category.js" defer></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    
+    <link rel="stylesheet" href="/stylesheets/user/car.css">
+    <link rel="stylesheet" href="/stylesheets/user/dashboard.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+
+  <!-- header start -->
+    <header>
+    <nav>
+        <ul class='nav-bar'>
+            <li class='logo'><a href='#'><img src="/images/cloud.jpg" alt=""></a></li>
+            <li class="brand">CLOUD KITCHEN</li>
+           
+            <input type='checkbox' id='check' />
+            <span class="menu">
+               <span title="Profile"><li><a href="dashboard/profile"><i class="fas fa-user" style="margin-right: 0px;"></i></a></li></span>
+               <a href="dashboard/cart"><i class="fas fa-shopping-cart" style="cursor: pointer;margin-right: 0px;"></i></a> 
+               <li><a href="dashboard">Home</a></li>
+                <li><a href="dashboard/about">About</a></li>
+                <!-- <li><a href="contact.html">Contact us</a></li> -->
+                <li><a href="dashboard/feedback">Feedback</a></li>
+                <li><a href="/user/<%= id %>/dashboard/orders">Order</a></li>
+                <li><a href="/user/logout" class="btn btn-danger">log out</a></li>
+                <label for="check" class="close-menu"><i class="fas fa-times"></i></label>
+            </span>
+            <label for="check" class="open-menu"><i class="fas fa-bars"></i></label>
+        </ul>
+    </nav>
+    </header>
+<!-- header end -->
+    <br><br>
+
+
+<!-- searchbar start -->
+    <center>
+    <form action="" class="input-box">
+      <i class="uil uil-search"></i>
+      <input type="text" name="query" placeholder="Search here..." />
+      <button type="submit" class="button">Search</button>
+    </form>
+  </center>
+  
+    <!-- category start-->
+    
+    
+        <div class="container">
+          <!-- <div class="icon"><i id="left" class="fa-solid fa-angle-left"></i></div>
+          <ul class="tabs-box">
+            <li class="tab">All</li>
+            <li class="tab">Biriyani</li>
+            <li class="tab">Dosha</li>
+            <li class="tab">Idli</li>
+            <li class="tab">Chapatti</li>
+            <li class="tab">Porotta</li>
+          </ul>
+          <div class="icon"><i id="right" class="fa-solid fa-angle-right"></i></div> -->
+          
+
+
+         
+    
+            <%- include('products') %>
+
+<!-- category end-->
+
+<br><br>
+
+<!-- Carousel -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HOME</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fody Slider</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/stylesheets/user/slider.css">
 
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" href="/stylesheets/user/dashboard.css" />
   </head>
+
   <body>
-    <!-- Navigation Bar -->
-    <%- include('components/nav') %>
-    <div class="container product-container">
-      <div class="row product-row">
-        <% if (products.length==0) { %>
-        <h3>No Products</h3>
-        <% }else{ %>
-          <% for( let i = 0; i < products.length; i++ ) { %>
-          
-          
-        <div class="col-md-4 mb-3">
-          <div class="product-card">
-            <img src="<%= products[i].dataValues.image %>" class="product-image" />
-            <div class="product-info">
-              <h4><%= products[i].dataValues.name %></h4>
-              <p><%= products[i].dataValues.description.slice(0,90) %>...</p>
-              <p><strong>Price:</strong> <%= products[i].dataValues.price %></p>
-              <a
-                class="btn btn-primary btn-block"
-                href="/user/<%= id %>/dashboard/product/<%= products[i].dataValues.id %>"
-                >Order</a>
+    <section id="tranding">
+      <div class="container">
+        <div class="swiper tranding-slider">
+          <div class="swiper-wrapper">
+            <!-- Slide-start -->
+            <% for( let i = 0; i < carousel.length; i++ ) { %>
+            
+           
+            <div class="swiper-slide tranding-slide">
+              <a href="/user/<%= id %>/dashboard/product/<%= carousel[i].dataValues.id %>" class="tranding-slide-img">
+                <img src="<%= carousel[i].dataValues.image %>" alt="<%= carousel[i].dataValues.name %>">
+              </a>
             </div>
+            <% } %>
           </div>
+
+          <div class="tranding-slider-control">
+            <div class="swiper-button-prev slider-arrow">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </div>
+            <div class="swiper-button-next slider-arrow">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </div>
+            <!-- <div class="swiper-pagination"></div> -->
+          </div>
+
         </div>
-        <% } %>
-       <% } %>
-
-        <!-- Add more product cards here -->
       </div>
-    </div>
-    <!--    ABOUT   -->
+    </section>
 
-    <div id="about" class="about">
-      <a href="#" class="closebtn" onclick="closeNav()">&times;</a>
-      <div class="about-overlay">
-        <h1>About us</h1>
-        <p>
-          Welcome to Community Kitchen , where we redefine the joy of dining
-          with affordable, safe, and homely food experiences. At Community
-          kitchen, we understand hat great food should not only tantalize your
-          taste buds but also fit seamlessly into your lifestyle. Our commitment
-          to providing food at affordable rates ensures that you can savor your
-          favorite flavors without compromising your budget.Your safety and
-          comfort are our top priorities. Our chefs meticulously craft each
-          dish, using only the freshest and finest ingredients. We take pride in
-          offering more than just a meal we provide a taste of home, a feeling
-          of warmth, and the assurance that every bite is prepared with care.Our
-          vision extends beyond being a food delivery service; we aim to be your
-          trusted culinary companion. Whether you're a busy professional, a
-          family seeking convenience, or someone who simply loves good food,
-          Community Kitchen is here to make your dining experience both
-          enjoyable and affordable.
-        </p>
-      </div>
-    </div>
-
-    <!--  FOOTER   -->
-
-    <%- include('components/footer') %>
-
-    <!-- Rest of the content goes here -->
-
-    <!-- Bootstrap JS and Popper.js (optional) -->
-    <script>
-      function openAbout() {
-        document.getElementById("about").style.width = "100%";
-      }
-
-      function closeNav() {
-        document.getElementById("about").style.width = "0%";
-      }
-    </script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script src="/javascript/slider.js"></script>
   </body>
+
+</html>
+
+
+<!-- footer start -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Footer Design</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/stylesheets/user/footer.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body>
+
+  <footer class="footer">
+  	 <div class="container">
+  	 	<div class="row">
+  	 		<div class="footer-col">
+  	 			<h4>CLOUD KITCHEN</h4>
+  	 			<ul>
+  	 				<li><a href="#">ABOUT US</a></li>
+  	 				<li><a href="#">OUR SERVICES</a></li>
+  	 				<li><a href="#">PRIVACY POLICY</a></li>
+  	 				<li><a href="#">support@communitykitchen.com</a></li>
+  	 			</ul>
+  	 		</div>
+
+  	 		<div class="footer-col">
+  	 			<h4>GET HELP</h4>
+  	 			<ul>
+  	 				<li><a href="#">FAQ</a></li>
+  	 				<li><a href="#">DELIVERY</a></li>
+  	 				<li><a href="#">MY ORDER</a></li>
+  	 				<li><a href="#">ORDER STATUS</a></li>
+  	 				<li><a href="#">PAYMENT OPTIONS</a></li>
+  	 			</ul>
+  	 		</div>
+  	 		
+  	 		<div class="footer-col">
+  	 			<h4>FOLLOW US</h4>
+  	 			<div class="social-links">
+  	 				<a href="#"><i class="fab fa-facebook-f"></i></a>
+  	 				<a href="#"><i class="fab fa-twitter"></i></a>
+  	 				<a href="#"><i class="fab fa-instagram"></i></a>
+  	 				<a href="#"><i class="fab fa-linkedin-in"></i></a>
+  	 			</div>
+  	 		</div>
+			<div class="footer-col">
+				<li><img style="height: 200px;width: 200px;" src="/images/kVnqwZ5gbfe4.gif" alt=""></li>
+			</div>
+  	 	</div>
+  	 </div>
+  </footer>
+
+</body>
+</html>
+
+
+
+<!-- footer end -->
+
+</body>
 </html>

@@ -14,7 +14,6 @@ const productModel=sequelizeConfig.define('product',{
       description: {
         type: DataTypes.TEXT,
         allowNull: false,
-        unique: true,
       },
       ingredients: {
         type: DataTypes.TEXT,
@@ -27,7 +26,11 @@ const productModel=sequelizeConfig.define('product',{
       image:{
         type: DataTypes.STRING,
         allowNull: false, 
-      }
+      },
+      category:{
+        type: DataTypes.STRING,
+        allowNull: false, 
+      },
 });
 
 module.exports=productModel;

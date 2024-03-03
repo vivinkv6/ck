@@ -51,6 +51,10 @@ const orderModel = sequelizeConfig.define("order", {
   price:{
     type:DataTypes.INTEGER,
     allowNull:false
+  },
+  mode:{
+    type: DataTypes.STRING,
+    allowNull: true, 
   }
 });
 

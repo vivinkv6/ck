@@ -3,12 +3,13 @@ const router = express.Router();
 const loginModel = require("../../models/user/login");
 const cookieAuth = require("../../utils/auth");
 const jwt = require("jsonwebtoken");
-const { Op, where } = require("sequelize");
+const { Op, where, Sequelize } = require("sequelize");
 
 //models
 const feedbackModel = require("../../models/admin/feedback");
 const productModel = require("../../models/admin/product");
 const orderModel = require("../../models/user/order");
+const bookingModel = require("../../models/user/booking");
 
 router.get("/login", async (req, res) => {
   if (req.cookies.user) {
@@ -45,10 +46,12 @@ router.post("/login", async (req, res) => {
 
       res.redirect(`/user/${checkData.dataValues.id}/dashboard`);
     } else {
-      res.render("user/login", { wrong: "Wrong password", emailExist: true });
+      // res.render("user/login", { wrong: "Wrong password", emailExist: true });
+      res.json({ wrong: "Wrong password", emailExist: true })
     }
   } else {
-    res.render("user/login", { wrong: "", emailExist: false });
+    // res.render("user/login", { wrong: "", emailExist: false });
+    res.json({ wrong: "", emailExist: false })
   }
 });
 
@@ -109,11 +112,18 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+router.get('/payment',(req,res)=>{
+  res.render('user/payment');
+})
+
 router.get("/:id/dashboard", async (req, res) => {
   const { id } = req.params;
-  const { query } = req.query;
+  const { query, category } = req.query;
   if (req.cookies.user) {
     const findId = await loginModel.findByPk(id);
+    const carousel=await productModel.findAll({
+      limit:5
+    })
 
     if (findId) {
       if (query) {
@@ -126,11 +136,26 @@ router.get("/:id/dashboard", async (req, res) => {
             },
           })
           .then((data) => {
-            res.render("user/dashboard", { id: id, products: data });
+            res.render("user/dashboard", { id: id, products: data,query:query,carousel:carousel });
           });
-      } else {
+      }else if(category){
+        const products = await productModel
+        .findAll({
+          where: {
+            category: {
+              [Op.iLike]: `%${category}%`,
+            },
+          },
+        })
+        .then((data) => {
+          res.render("user/dashboard", { id: id, products: data,query:query,carousel:carousel });
+        });
+      }
+      
+      else {
         const products = await productModel.findAll({});
-        res.render("user/dashboard", { id: id, products: products });
+       
+        res.render("user/dashboard", { id: id, products: products,query:query,carousel:carousel });
       }
     } else {
       res.clearCookie("user");
@@ -150,6 +175,7 @@ router.get("/:id/dashboard/orders", async (req, res) => {
         where: {
           customerid: findId.dataValues.id,
         },
+        order: [["createdAt", "DESC"]],
       });
       res.render("user/orders", { id: id, orders: orders });
     } else {
@@ -166,20 +192,20 @@ router.get("/:id/dashboard/orders/:order/cancel", async (req, res) => {
   if (req.cookies.user) {
     const findId = await loginModel.findByPk(id);
     if (findId) {
-      const findOrder = await orderModel.update(
-        {
-          status: "Cancelled",
-        },
-        {
-          where: {
-            id: order,
+      const findOrder = await orderModel
+        .update(
+          {
+            status: "Cancelled",
           },
-        }
-      ).then(()=>{
-        res.redirect(`/user/${id}/dashboard/orders`)
-      })
-
-      
+          {
+            where: {
+              id: order,
+            },
+          }
+        )
+        .then(() => {
+          res.redirect(`/user/${id}/dashboard/orders`);
+        });
     } else {
       res.clearCookie("user");
       res.redirect("/user/login");
@@ -219,7 +245,7 @@ router.post("/:id/dashboard/product/:product", async (req, res) => {
     if (findId) {
       if (findproduct) {
         const total = findproduct?.dataValues.price * quantity;
-        const order = orderModel
+        const order = bookingModel
           .create({
             name: findId.dataValues.name,
             datetime: new Date(),
@@ -253,10 +279,40 @@ router.post("/:id/dashboard/product/:product", async (req, res) => {
 
 router.get("/:id/dashboard/product/:product/pay", async (req, res) => {
   const { id, product } = req.params;
+  console.log(req.query);
   if (req.cookies.user) {
     const findId = await loginModel.findByPk(id);
+    const findProduct=await bookingModel.findByPk(product);
+   
     if (findId) {
-      res.redirect(`/user/${id}/dashboard/orders`);
+      if(findProduct){
+        if(req.query.mode=="cod"){
+          console.log("correct");
+        
+        const orderProduct=await orderModel.create( {
+          name: findId.dataValues.name,
+          datetime: new Date(),
+          order: findProduct?.dataValues.order,
+          quantity: findProduct?.dataValues.quantity,
+          total: findProduct?.dataValues.total,
+          address: findProduct?.dataValues.address,
+          pincode: findProduct?.dataValues.pincode,
+          phone: findProduct?.dataValues.phone,
+          status: "Processing",
+          customerid: findProduct?.dataValues.customerid,
+          price: findProduct?.dataValues.price,
+          mode:"Cash On Delivery"}).then((data)=>{
+            console.log(data);
+          res.redirect(`/user/${id}/dashboard/orders`);
+        }).catch((err)=>{
+          res.json({err:err.message})
+        })
+      }else{
+        res.render('user/payment',{total:findProduct.dataValues.total,id:findProduct.dataValues.id})
+       
+      }
+    }
+      
     } else {
       res.clearCookie("user");
       res.redirect("/user/login");
@@ -266,12 +322,90 @@ router.get("/:id/dashboard/product/:product/pay", async (req, res) => {
   }
 });
 
-router.get("/:id/dashboard/contact", async (req, res) => {
+router.post("/:id/dashboard/product/:product/pay", async (req, res) => {
+  const { id, product } = req.params;
+  const findId = await loginModel.findByPk(id);
+  const findProduct=await bookingModel.findByPk(product);
+
+  const orderProduct=await orderModel.create( {
+    name: findId.dataValues.name,
+    datetime: new Date(),
+    order: findProduct?.dataValues.order,
+    quantity: findProduct?.dataValues.quantity,
+    total: findProduct?.dataValues.total,
+    address: findProduct?.dataValues.address,
+    pincode: findProduct?.dataValues.pincode,
+    phone: findProduct?.dataValues.phone,
+    status: "Processing",
+    customerid: findProduct?.dataValues.customerid,
+    price: findProduct?.dataValues.price,
+    mode:"Online Banking"}).then((data)=>{
+      console.log(data);
+    res.redirect(`/user/${id}/dashboard/orders`);
+  }).catch((err)=>{
+    res.json({err:err.message})
+  })
+
+})
+
+router.get('/:id/dashboard/cart',async(req,res)=>{
   const { id } = req.params;
   if (req.cookies.user) {
     const findId = await loginModel.findByPk(id);
     if (findId) {
-      res.render("user/contact", { id: id });
+      const findProducts=await productModel.findAll({
+        where:{
+          id:findId.dataValues.cart
+        }
+      })
+      res.render("user/cart",{products:findProducts,id:id});
+    } else {
+      res.clearCookie("user");
+      res.redirect("/user/login");
+    }
+  } else {
+    res.redirect("/user/login");
+  }
+})
+
+router.get('/:id/dashboard/cart/:product',async(req,res)=>{
+  const { id,product } = req.params;
+  if (req.cookies.user) {
+    const findId = await loginModel.findByPk(id);
+    if (findId) {
+      if(findId.dataValues.cart==null){
+        findId.update({
+          cart:[product]
+        }).then(()=>{
+          res.redirect(`/user/${id}/dashboard/cart`);
+        }).catch((err)=>{
+          res.json({err:err.message});
+        })
+      }else{
+        findId.update({
+          cart:[...findId.dataValues.cart,product]
+        }).then(()=>{
+          res.redirect(`/user/${id}/dashboard/cart`);
+        }).catch((err)=>{
+          res.json({err:err.message});
+        })
+      }
+      
+    } else {
+      res.clearCookie("user");
+      res.redirect("/user/login");
+    }
+  } else {
+    res.redirect("/user/login");
+  }
+})
+
+router.get("/:id/dashboard/about", async (req, res) => {
+  const { id } = req.params;
+  if (req.cookies.user) {
+    const findId = await loginModel.findByPk(id);
+    if (findId) {
+      res.render("user/about", { id: id });
     } else {
       res.clearCookie("user");
       res.redirect("/user/login");
@@ -331,6 +465,26 @@ router.get("/:id/dashboard/profile", async (req, res) => {
     }
   } else {
     res.clearCookie("user");
+    res.redirect("/user/login");
+  }
+});
+
+router.post("/:id/dashboard/profile", async (req, res) => {
+  const { id } = req.params;
+  if (req.cookies.user) {
+    const updateProfile = await loginModel
+      .update(req.body, {
+        where: {
+          id: id,
+        },
+      })
+      .then(() => {
+        res.redirect(`/user/${id}/dashboard/profile`);
+      })
+      .catch((err) => {
+        res.json({ err: err.message });
+      });
+  } else {
     res.redirect("/user/login");
   }
 });

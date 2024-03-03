@@ -6,6 +6,7 @@
     <title>Dummy Payment Gateway</title>
     <!-- Add Bootstrap CSS link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/user/pay.css">
     <style>
         body {
             background-color: #f8f9fa;
@@ -21,18 +22,20 @@
     </style>
 </head>
 <body>
-
+    <center>
+<img  src="/images/payment.gif" alt="">
+    </center>
 <div class="container">
     <div class="payment-form">
         <h2 class="text-center mb-4">Payment Details</h2>
         <p>Items Orderd : <%= order.order %></p>
         <p>Total Amount : <%= order.total %></p>
-                <form action="<%= id %>/pay" method="get">
+                <form action="<%= order.id %>/pay">
             <div class="form-group">
                 <label for="paymentMethod">Payment Method</label>
-                <select class="form-control" id="paymentMethod" required>
-                    <option value="onlineBanking">Online Banking</option>
-                    <option value="cashOnDelivery">Cash on Delivery</option>
+                <select class="form-control" name="mode" id="paymentMethod" required>
+                    <option value="ob">Online Banking</option>
+                    <option value="cod">Cash on Delivery</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Pay</button>

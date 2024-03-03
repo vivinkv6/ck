@@ -1,0 +1,50 @@
+.carousel-caption{
+	color: #3f3f3f;
+	text-align: right;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.carousel-caption h5{
+	font-size: 5vw;
+	font-weight: 700;
+}
+
+.carousel-caption p{
+	font-size: 2vw;
+}
+
+.product{
+	transition: all .8s ease-in-out;
+	-webkit-transition: all .8s ease-in-out;
+}
+
+.product:hover{
+	transform: scale(1.2);
+}
+
+
+.meal-type {
+	width: 100px;
+	height: 100px;
+	background-color: red;
+	border-radius: 50%;
+	display: inline-block;
+	text-align: center;
+	line-height: 100px;
+	margin-right: 10px;
+	cursor: pointer;
+  }
+  
+  .selected-meals {
+	margin-top: 20px;
+  }
+  
+  .selected-meal {
+	display: inline-block;
+	background-color: lightgray;
+	padding: 5px 10px;
+	margin-right: 10px;
+	border-radius: 20px;
+	font-size: 14px;
+  }

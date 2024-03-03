@@ -1,52 +1,7 @@
 body {
-    background-color: #FFE5B4;
-}
-
-/* navbar */
-
-/* navbar */
-.navwid{
-    max-width: 100%;
-}
-
- 
-
-.form-inline input {
-    border-radius: 15px; /* Add border-radius for a rounded input */
-  }
-
-  .btn-search {
-    background-color: #3498db; /* Change the button background color */
-    color: #f05454; /* Change the button text color */
-    border-radius: 15px; /* Add border-radius for a rounded button */
-  }
-
-  .btn-search:hover {
-    background-color: #2980b9; /* Change the button background color on hover */
-  }
-
-.navbar {
-    background-color:#f5efdd !important;
-    margin-bottom: 20px;
-}
-
-.navbar-brand {
-    color: #5b6bfa !important;
-    font-size: 1.5rem;
-    font-weight: 700;
-}
-
-.navbar-nav .nav-link {
-    color: #5b6bfa !important;
-    font-size: 1.2rem;
-    font-weight: 500;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.navbar-nav .nav-link:hover {
-    background-color:orangered;
-    color: #fff !important;
-    border-radius: 10px;
+    background-color: #fff;
+    margin: 0px;
+    padding: 0px;
 }
 
     /* product */
@@ -58,9 +13,17 @@ body {
         padding: 20px;
         margin-top: 80px;
     }
+    
+    .dish1 {
+        margin-bottom: 0px;
+        margin-top: 135px;
+        margin-left: 100px;
+      }
+      
+
 
     img {
-        max-width: 100%;
+        max-width: 400px;
         height: auto;
         border-radius: 8px;
         margin-bottom: 20px;
@@ -82,13 +45,13 @@ body {
     }
 
     .btn-primary {
-        background-color: #ff6347;
-        border-color: #ff6347;
+        background-color: #9f2b2b;
+        border-color: #9f2b2b;
     }
 
     .btn-primary:hover {
-        background-color: #d43f3a;
-        border-color: #d43f3a;
+        background-color: #b76562;
+        border-color: #944542;
     }
 
     /* about */
@@ -142,9 +105,16 @@ body {
     
     }
     
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 600px) {
     /* Responsive styles for smaller screens */
-    
+    .dish1 {
+        margin-bottom: 0px;
+        margin-top: 10%;
+        margin-left: 0px;
+      }
+      img{
+        width: 100%;
+      }
     
     .about a {
     padding: 20px;
@@ -173,3 +143,5 @@ body {
         left: 0px;
         width: 100%;
     }
+
+   

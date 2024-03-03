@@ -12,15 +12,16 @@
 <body>
 
     <!-- Navigation Bar -->
-   <%- include('components/nav') %>
+    <%- include('components/nav') %>
+
      <!--   ORDERS  -->
 
      <section>
         <div class="container product-container tabwid">
           <div cass="row mt-3">
             <% if (orders.length==0) { %>
-             <h3 class="text-center">No Orders</h3>
-            <% }else{ %>
+              <h3 class="text-center">No Orders</h3>
+             <% }else{ %>
           <table class="table mt-3">
           <thead>
           <tr>
@@ -32,37 +33,30 @@
             <th scope="col">ADDRESS</th>
             <th scope="col">PIN CODE</th>
             <th scope="col">PHONE NO</th>
+            <th scope="col">PAYMENT</th>
             <th scope="col">ORDER STATUS</th>
             <th scope="col">UPDATE STATUS</th>
           </tr>
           </thead>
           <tbody>
+
+
             <% for( let i = 0; i < orders.length; i++ ) { %>
-          <tr>
-            <td><%= orders[i].dataValues.datetime %></td>
-            <td><%= orders[i].dataValues.name %></td>
-            <td><%= orders[i].dataValues.order %></td>
-            <td><%= orders[i].dataValues.quantity %></td>
-            <td><%= orders[i].dataValues.total %></td>
-            <td><%= orders[i].dataValues.address %></td>
-            <td><%= orders[i].dataValues.pincode %></td>
-            <td><%= orders[i].dataValues.phone %></td>
-            <td><%= orders[i].dataValues.status %></td>
-            <td><a href="orders/<%= orders[i].dataValues.id %>" class="btn btn-primary">UPDATE STATUS</a></td></td>
-          </tr>
-          <% } %>
-          <!-- <tr>
-            <td>12/5/2024  8:18</td>
-            <td>arun</td>
-            <td>chicken-biryani</td>
-            <td>2</td>
-            <td>150</td>
-            <td> thrisur </td>
-            <td>564256</td>
-            <td>4367656546546</td>
-            <td>confirmed</td>
-            <td><a href="/admin/orders/1" class="btn btn-primary">UPDATE STATUS</a></td></td>
-          </tr> -->
+              <tr>
+                <td><%= orders[i].dataValues.datetime %></td>
+                <td><%= orders[i].dataValues.name %></td>
+                <td><%= orders[i].dataValues.order %></td>
+                <td><%= orders[i].dataValues.quantity %></td>
+                <td><%= orders[i].dataValues.total %></td>
+                <td><%= orders[i].dataValues.address %></td>
+                <td><%= orders[i].dataValues.pincode %></td>
+                <td><%= orders[i].dataValues.phone %></td>
+                <td><%= orders[i].dataValues.mode %></td>
+                <td><%= orders[i].dataValues.status %></td>
+                <td><a href="orders/<%= orders[i].dataValues.id %>" class="btn btn-primary">UPDATE STATUS</a></td></td>
+              </tr>
+              <% } %>
+
         </tbody>
        </table>
        <% } %>
@@ -75,7 +69,10 @@
 
         <!--  FOOTER   -->
     
-      <%- include('../user/components/footer') %>
+        <footer>
+            <p> 2024 Communty kitchen. All rights reserved.</p>
+          </footer>
+    
 
     <!-- Bootstrap JS and Popper.js (optional) -->
    

@@ -3,115 +3,115 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up</title>
-    <!-- Add Bootstrap CSS link -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" href="/stylesheets/user/signup.css" />
+    <script
+      src="https://kit.fontawesome.com/64d58efce2.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/stylesheets/user/login.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Sign in & Sign up Form</title>
   </head>
   <body>
     <div class="container">
-      <div class="signup-form">
-        <h2 class="text-center mb-4">Sign Up</h2>
-        <form action="signup" method="post">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input
-              type="text"
-              class="form-control"
-              name="name"
-              id="name"
-              placeholder="Enter your name"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              name="email"
-              id="email"
-              placeholder="Enter your email"
-              required
-            />
+
+      <div class="forms-container">
+
+        <div class="signin-signup">
+
+          <form action="signup" name="login" method="post" class="sign-in-form">
+
+            <h2 class="title">Sign up</h2>
+        
+            <div class="input-field">
+                <i class="fas fa-user"></i>
+                <input type="text" name="name" placeholder="Name" />
+            </div>
+        
+            <div class="input-field">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="email" placeholder="Email" />
+               
+                
+              
+            </div>
             <% if (exist) { %>
-            <p class="text-danger">Email Already exist</p>
+              <p style="color: red;">Email Already Exist</p>
             <% } %>
-          </div>
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input
-              type="tel"
-              class="form-control"
-              name="phone"
-              id="phone"
-              placeholder="Enter your phone number"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="address">Address</label>
-            <textarea
-              class="form-control"
-              id="address"
-              name="address"
-              rows="4"
-              placeholder="Enter your address"
-              required
-            ></textarea>
-          </div>
-          <div class="form-group">
-            <label for="pincode">Pincode</label>
-            <input
-              type="text"
-              class="form-control"
-              id="pincode"
-              name="pincode"
-              placeholder="Enter your pincode"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              name="password"
-              placeholder="Enter your password"
-              required
-            />
+        
+            <div class="input-field">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" />
+              
+            </div>
             <% if (wrongPassword) { %>
-            <p class="text-danger">Wrong Password</p>
+              <p style="color: red;">Wrong Password</p>
             <% } %>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              <input type="password" name="confirm" placeholder="Confirm Password" />
           </div>
-          <div class="form-group">
-            <label for="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="confirmPassword"
-              name="confirm"
-              placeholder="Confirm your password"
-              required
-            />
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">
-            Sign Up</button
-          ><br />
-          <div class="text-center">
-            <a href="login">Already have an account? Sign in </a>
-          </div>
+        
+            <!-- New Fields -->
+            <div class="input-field">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" name="address" placeholder="Address" />
+            </div>
+        
+            <div class="input-field">
+                <i class="fas fa-map-pin"></i>
+                <input type="text" name="pincode" placeholder="Pincode" />
+            </div>
+        
+            <div class="input-field">
+                <i class="fas fa-phone"></i>
+                <input type="tel" name="phone" placeholder="Phone" />
+            </div>
+
+           
+            <!-- End of New Fields -->
+        
+            <button type="submit" class="btn" style="color: #fff;">
+                SIGN UP
+            </button>
+        
+          
         </form>
+
+
+         
+        </div>
+      </div>
+
+      <div class="panels-container">
+        <div class="panel left-panel">
+          <div class="content">
+            <h3>One of us ?</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
+              laboriosam ad deleniti.
+            </p>
+            <a href="/user/login" style="padding: 10px 20px;text-decoration: none;" class="btn transparent" id="sign-in-btn">
+              Sign in
+            </a>
+          </div>
+          <img src="image/login.svg" class="image" alt="" />
+        </div>
+        <div class="panel right-panel">
+          <div class="content">
+            <h3>One of us ?</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
+              laboriosam ad deleniti.
+            </p>
+            <a href="#login" style="padding: 10px 20px;text-decoration: none;" class="btn transparent" id="sign-in-btn">
+              Sign in
+            </a>
+          </div>
+          <img src="image/login2.svg" class="image" alt="" />
+        </div>
       </div>
     </div>
 
-    <!-- Add Bootstrap JS and Popper.js scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/javascript/login.js"></script>
   </body>
 </html>

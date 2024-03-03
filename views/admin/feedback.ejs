@@ -1,3 +1,7 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +16,7 @@
 <body>
 
     <!-- Navigation Bar -->
-   <%- include('components/nav') %>
+    <%- include('components/nav') %>
 
      <!--   rating  -->
 
@@ -20,8 +24,8 @@
         <div class="container product-container tabwid">
           <div cass="row mt-3">
             <% if (feedback.length==0) { %>
-             <h3 class="text-center">No Feedback</h3>
-            <% }else{ %>
+              <h3 class="text-center">No Feedback</h3>
+             <% }else{ %>
           <table class="table mt-3">
           <thead>
           <tr>
@@ -32,12 +36,13 @@
           </thead>
           <tbody>
             <% for( let i = 0; i < feedback.length; i++ ) { %>
-          <tr>
-            <td><%= feedback[i].dataValues.name %></td>
-            <td><%= feedback[i].dataValues.email %></td>
-            <td><%= feedback[i].dataValues.message %></td>
-          </tr>
-          <% } %>
+              <tr>
+                <td><%= feedback[i].dataValues.name %></td>
+                <td><%= feedback[i].dataValues.email %></td>
+                <td><%= feedback[i].dataValues.message %></td>
+              </tr>
+              <% } %>
+         
         </tbody>
        </table>
        <% } %>

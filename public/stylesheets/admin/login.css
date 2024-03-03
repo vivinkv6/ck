@@ -1,5 +1,5 @@
 body {
-    background-color: #FFE5B4;
+    background-color: #9f2b2b;
 }
 .login-form {
     max-width: 500px;
@@ -11,9 +11,10 @@ body {
 }
 .btn{
     border-radius:10px;
+    background-color: #9f2b2b;
 }
 .btn:hover {
-    background-color:orangered;
-    color: #fff !important;
+    background-color:#a38888;
+    color: #fff;
     border-radius: 10px;
 }

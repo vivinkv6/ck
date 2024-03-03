@@ -31,6 +31,10 @@ const loginModel = sequelizeConfig.define("userlogin", {
   pincode:{
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  cart:{
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    allowNull: true,
   }
 });
 

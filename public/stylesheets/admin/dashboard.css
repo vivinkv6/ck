@@ -2,19 +2,24 @@ body {
     background-color: #f8f9fa;
     padding: 20px;
 }
-
+.navwid{
+    max-width: 100%;
+}
+.tabwid{
+    max-width: 95%;
+}
 .navbar {
-    background-color: #fff;
+    background-color: #9f2b2b;
 }
 
 .navbar-brand {
-    color: #007bff !important;
+    color: #fff !important;
     font-size: 1.5rem;
     font-weight: 700;
 }
 
 .navbar-nav .nav-link {
-    color: #007bff !important;
+    color: #fff !important;
     font-size: 1rem;
     font-weight: 500;
     transition: background-color 0.3s, color 0.3s;
@@ -22,15 +27,12 @@ body {
 }
 
 .navbar-nav .nav-link:hover {
-    background-color:orangered;
+    background-color: #a38888;
     color: #fff !important;
 }
 
-
-
-
- /* footer  */
- footer {
+/* footer */
+footer {
     background-color: #333;
     color: white;
     text-align: center;
@@ -41,16 +43,36 @@ body {
     left: 0px;
     width: 100%;
     bottom: 0;
-    position:fixed;
+    position: fixed;
 }
- 
 
-
-
-.product-container{
+.product-container {
     margin-top: 80px;
- }
-.btn-primary{
-    background: orangered;
-    border-color: red;
+}
+
+.btn-success{
+    background: #9f2b2b;
+    border-color: #9f2b2b;
+}
+.btn-success:hover{
+    color:white;
+    background: #a38888;
+}
+
+.btn-outline-primary {
+    border-color: #9f2b2b;
+    color: #9f2b2b;
+}
+.btn-primary {
+    background: #9f2b2b;
+    border-color: #9f2b2b;
+}
+.btn-primary:hover{
+    background-color: #a38888;
+}
+
+/* Make the width dynamic for the "Description" column */
+.table th, .table td {
+    word-wrap: break-word;
+    max-width: 300px; /* Set a max-width to prevent it from becoming too wide */
 }

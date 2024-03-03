@@ -4,17 +4,17 @@ body {
 }
 
 .navbar {
-    background-color: #fff;
+    background-color: #9f2b2b;
 }
 
 .navbar-brand {
-    color: #007bff !important;
+    color: #fff !important;
     font-size: 1.5rem;
     font-weight: 700;
 }
 
 .navbar-nav .nav-link {
-    color: #007bff !important;
+    color: #fff !important;
     font-size: 1rem;
     font-weight: 500;
     transition: background-color 0.3s, color 0.3s;
@@ -22,10 +22,9 @@ body {
 }
 
 .navbar-nav .nav-link:hover {
-    background-color:orangered;
+    background-color: #a38888;
     color: #fff !important;
 }
-
 
 
 
@@ -60,10 +59,10 @@ body {
 }
 
   .btn{
-    background: blue;
+    background: #9f2b2b;
     color: white;
   }
   .btn:hover{
-    background: orangered;
+    background: #a38888;
     color: white;
   }
